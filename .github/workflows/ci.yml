@@ -1,0 +1,40 @@
+name: Python Code Quality
+
+# PR作成時およびメインブランチへのプッシュ時に実行
+on:
+  pull_request:
+    branches: [ "main", "master" ]
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip' # pipのキャッシュを有効化して高速化
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # 実行環境に必要なライブラリがあればここでインストール
+          # pip install -r requirements.txt 
+          pip install ruff pyright
+
+      - name: Run Ruff (Lint & Docstring Check)
+        run: |
+          # 警告だけでなく、エラーがあれば CI を終了 (exit 1) させる
+          ruff check .
+
+      - name: Run Pyright (Type Check)
+        run: |
+          # pyproject.toml の設定を自動で読み込んで実行される
+          pyright
