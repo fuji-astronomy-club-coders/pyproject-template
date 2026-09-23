@@ -8,27 +8,31 @@ extraPaths = ["."]
 typeCheckingMode = "basic"
 pythonVersion = "3.13"
 
-
 [tool.ruff]
 target-version = "py313"
-line-length = 112
+line-length = 100
 
 [tool.ruff.lint]
-
 exclude = []
 select = [
-    "E",
-    "F",
-    "I",
-    "B",
-    "UP",
-    "SIM",
-    "PTH",
-    "A",
-    "ANN",
+    "E",   # pycodestyle (エラー)
+    "F",   # Pyflakes
+    "I",   # isort (インポート順)
+    "B",   # flake8-bugbear (バグの可能性)
+    "UP",  # pyupgrade (最新構文へのアップグレード)
+    "SIM", # flake8-simplify (コードの簡略化)
+    "PTH", # flake8-use-pathlib (pathlibの推奨)
+    "A",   # flake8-builtins (組み込み関数の上書き防止)
+    "D",   # pydocstyle (docstringチェック)
+    "ANN", # flake8-annotations (型ヒントチェック)
 ]
 ignore = [
-    "E501",
+    "E501", # 行の長さ制限（厳密すぎる場合は除外）
+    "D107", # __init__ メソッドのdocstring必須を解除（クラス側に書くため）
+    "ANN101", # self の型ヒントを必須にしない（Ruff v0.2.0以降は非推奨ですが念のため）
+    "ANN102", # cls の型ヒントを必須にしない
 ]
 
-
+# pydocstyleの標準フォーマットに numpy を指定
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
