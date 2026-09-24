@@ -1,40 +1,54 @@
-name: Python Code Quality
+name: CI
 
-# PR作成時およびメインブランチへのプッシュ時に実行
 on:
-  pull_request:
-    branches: [ "main", "master" ]
   push:
-    branches: [ "main", "master" ]
+    branches:
+      - main
+      - master
+
+  pull_request:
 
 jobs:
-  lint-and-typecheck:
+  lint-and-type-check:
     name: Lint & Type Check
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
-          cache: 'pip' # pipのキャッシュを有効化して高速化
+          python-version: "3.13"
+          cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          # 実行環境に必要なライブラリがあればここでインストール
-          # pip install -r requirements.txt 
-          pip install ruff pyright
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      - name: Run Ruff (Lint & Docstring Check)
+      - name: Install project dependencies
         run: |
-          # 警告だけでなく、エラーがあれば CI を終了 (exit 1) させる
+          python -m pip install -r dependencies.txt
+
+      - name: Install development dependencies
+        run: |
+          python -m pip install \
+            "ruff>=0.13" \
+            "basedpyright>=1.31"
+
+      - name: Check dependencies.txt
+        run: |
+          python generate_dependencies.py --check
+
+      - name: Ruff check
+        run: |
           ruff check .
 
-      - name: Run Pyright (Type Check)
+      - name: Ruff format check
         run: |
-          # pyproject.toml の設定を自動で読み込んで実行される
-          pyright
+          ruff format --check .
+
+      - name: basedpyright
+        run: |
+          basedpyright
