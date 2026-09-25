@@ -1,5 +1,7 @@
 """Synchronize Python imports with pyproject.toml dependencies."""
-from __future__ import annotations
+
+from __future__ import annotations  # noqa:I001
+
 import argparse
 import ast
 import importlib.metadata
@@ -9,17 +11,41 @@ import sys
 import tomllib
 from pathlib import Path
 
-IGNORED_DIRS = {".git", ".github", ".venv", "venv", "__pycache__", ".mypy_cache", ".pytest_cache", ".ruff_cache", "build", "dist", "site-packages"}
-IMPORT_TO_DISTRIBUTION = {"PIL": "Pillow", "cv2": "opencv-python", "sklearn": "scikit-learn", "yaml": "PyYAML", "bs4": "beautifulsoup4", "dateutil": "python-dateutil", "dotenv": "python-dotenv"}
+IGNORED_DIRS = {
+    ".git",
+    ".github",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+    "site-packages",
+}
+IMPORT_TO_DISTRIBUTION = {
+    "PIL": "Pillow",
+    "cv2": "opencv-python",
+    "sklearn": "scikit-learn",
+    "yaml": "PyYAML",
+    "bs4": "beautifulsoup4",
+    "dateutil": "python-dateutil",
+    "dotenv": "python-dotenv",
+}
 REQUIREMENT_NAME_RE = re.compile(r"^\s*([A-Za-z0-9][A-Za-z0-9._-]*)")
 
 
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description="Analyze Python imports and synchronize pyproject.toml.")
+    parser = argparse.ArgumentParser(
+        description="Analyze Python imports and synchronize pyproject.toml."
+    )
     parser.add_argument("--root", type=Path, default=Path.cwd(), help="Project root directory.")
     parser.add_argument("--include-tests", action="store_true", help="Include imports from tests/.")
-    parser.add_argument("--check", action="store_true", help="Only validate pyproject.toml dependencies.")
+    parser.add_argument(
+        "--check", action="store_true", help="Only validate pyproject.toml dependencies."
+    )
     parser.add_argument("--verbose", action="store_true", help="Print discovered imports.")
     return parser.parse_args()
 
@@ -78,7 +104,11 @@ def find_local_modules(root: Path) -> set[str]:
         relative = path.relative_to(root)
         if any(part in IGNORED_DIRS for part in relative.parts):
             continue
-        modules.add(relative.parts[-2] if path.name == "__init__.py" and len(relative.parts) > 1 else path.stem)
+        modules.add(
+            relative.parts[-2]
+            if path.name == "__init__.py" and len(relative.parts) > 1
+            else path.stem
+        )
     return modules
 
 
@@ -123,7 +153,9 @@ def update_pyproject_dependencies(pyproject: Path, missing: dict[str, str]) -> l
     insertion = "".join(f'    "{requirement}",\n' for requirement in additions)
     body_end = dependencies_match.end(1)
     new_project_text = project_text[:body_end] + insertion + project_text[body_end:]
-    pyproject.write_text(source[:project_start] + new_project_text + source[project_end:], encoding="utf-8")
+    pyproject.write_text(
+        source[:project_start] + new_project_text + source[project_end:], encoding="utf-8"
+    )
     return additions
 
 
@@ -136,7 +168,11 @@ def main() -> int:
         print(f"ERROR: pyproject.toml not found: {pyproject}", file=sys.stderr)
         return 1
     declared = load_project_dependencies(pyproject)
-    declared_names = {normalize_distribution_name(name) for name in (extract_requirement_name(req) for req in declared) if name}
+    declared_names = {
+        normalize_distribution_name(name)
+        for name in (extract_requirement_name(req) for req in declared)
+        if name
+    }
     python_files = find_python_files(root, args.include_tests)
     print(f"Project root: {root}")
     print(f"Python files: {len(python_files)}")
@@ -150,7 +186,11 @@ def main() -> int:
                 print(f"  {name}")
     stdlib = set(getattr(sys, "stdlib_module_names", ()))
     local_modules = find_local_modules(root)
-    external = {name for name in imports if name not in stdlib and name not in local_modules and not keyword.iskeyword(name)}
+    external = {
+        name
+        for name in imports
+        if name not in stdlib and name not in local_modules and not keyword.iskeyword(name)
+    }
     mapping = build_import_distribution_map()
     discovered: dict[str, str] = {}
     unresolved = set()
