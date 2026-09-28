@@ -1,0 +1,13 @@
+# CI専用Ruff設定
+#
+# 通常の開発環境では pyproject.toml を使用する。
+# CIでは、このファイルを通して低優先度のルールを緩和する。
+
+extend = "../../pyproject.toml"
+
+[lint]
+# pyproject.toml のルールを維持したまま、
+# CIではPathlib移行チェックを合否判定から除外する。
+ignore = [
+    "PTH",
+]

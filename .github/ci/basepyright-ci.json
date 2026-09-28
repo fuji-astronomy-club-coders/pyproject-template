@@ -1,0 +1,21 @@
+{
+    "extends": "../../pyproject.toml",
+
+    "include": [
+        "pyproject"
+    ],
+
+    "exclude": [
+        "**/__pycache__",
+        ".venv",
+        "venv",
+        "build",
+        "dist"
+    ],
+
+    "typeCheckingMode": "standard",
+    "pythonVersion": "3.13",
+
+    "reportMissingImports": "error",
+    "reportMissingTypeStubs": false
+}
