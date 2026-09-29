@@ -1,6 +1,4 @@
 {
-    "extends": "../../pyproject.toml",
-
     "include": [
         "pyproject"
     ],
@@ -13,9 +11,11 @@
         "dist"
     ],
 
-    "typeCheckingMode": "basic",
+    "typeCheckingMode": "standard",
     "pythonVersion": "3.13",
 
     "reportMissingImports": "error",
-    "reportMissingTypeStubs": false
+    "reportMissingTypeStubs": false,
+
+    "failOnWarnings": false
 }
