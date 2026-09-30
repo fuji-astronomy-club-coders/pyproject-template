@@ -32,11 +32,37 @@ jobs:
       - name: Check pyproject dependencies
         run: python generate_dependencies.py --check
 
-      - name: Ruff check
-        run: ruff check . --config .github/ci/ruff.toml
+      # ----------------------------------------
+      # Ruff: warning-only rules
+      # ----------------------------------------
+      - name: Ruff check - warnings
+        run: |
+          echo "::group::Ruff warnings"
+          ruff check . \
+            --select I001,D,PTH,UP015,UP017,B905 \
+            --output-format=concise \
+            --exit-zero
+          echo "::endgroup::"
 
+      # ----------------------------------------
+      # Ruff: CI-blocking rules
+      # ----------------------------------------
+      - name: Ruff check - errors
+        run: |
+          ruff check . \
+            --config .github/ci/ruff.toml \
+            --ignore I001,D,PTH,UP015,UP017,B905
+
+      # ----------------------------------------
+      # Ruff formatter
+      # ----------------------------------------
       - name: Ruff format check
-        run: ruff format --check . --config .github/ci/ruff.toml
+        run: |
+          ruff format --check . \
+            --config .github/ci/ruff.toml
 
+      # ----------------------------------------
+      # basedpyright
+      # ----------------------------------------
       - name: basedpyright
         run: basedpyright

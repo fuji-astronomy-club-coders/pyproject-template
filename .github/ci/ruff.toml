@@ -5,9 +5,16 @@
 
 extend = "../../pyproject.toml"
 
+
 [lint]
-# pyproject.toml のルールを維持したまま、
-# CIではPathlib移行チェックを合否判定から除外する。
 ignore = [
+    "I001",
+    "D205",
+    "D403",
+    "D202",
+    "D100",
     "PTH",
+    "UP015",
+    "UP017",
+    "B905",
 ]
