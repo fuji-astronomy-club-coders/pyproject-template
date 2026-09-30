@@ -125,9 +125,9 @@ LSPにpackageの場所を教えるために`pyproject.toml`の各LSP項目にpac
 
 ### 4-1. 不要ファイルの削除
 
-- `TEST/materials/manual.md`
+- `TEST/tutorial/manual.md`
 
-- `TEST/materials/assets/*.png`
+- `TEST/tutorial/assets/*.png`
   
   
 
@@ -148,7 +148,5 @@ LSPにpackageの場所を教えるために`pyproject.toml`の各LSP項目にpac
 <img src="./assets/image07.png" style="width: 50%;" alt="alt text">
 
 jsonファイルに保存されていた設定が読み込まれ、各項目に値が入力されるので、一番下の`Create`ボタンでルールセットを作成してしまいましょう。
-
-
 
 
