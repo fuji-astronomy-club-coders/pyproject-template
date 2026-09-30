@@ -20,7 +20,6 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["pyproject"]
 [tool.ruff]
 line-length = 100
 target-version = "py313"
@@ -63,9 +62,6 @@ convention = "numpy"
 quote-style = "double"
 
 [tool.basedpyright]
-include = [
-    "pyproject",  
-    ]   
 exclude = [
     "**/__pycache__",
     ".venv",
