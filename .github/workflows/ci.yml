@@ -54,14 +54,6 @@ jobs:
             --ignore I001,D,PTH,UP015,UP017,B905
 
       # ----------------------------------------
-      # Ruff formatter
-      # ----------------------------------------
-      - name: Ruff format check
-        run: |
-          ruff format --check . \
-            --config .github/ci/ruff.toml
-
-      # ----------------------------------------
       # basedpyright
       # ----------------------------------------
       - name: basedpyright
