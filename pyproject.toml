@@ -61,6 +61,7 @@ convention = "numpy"
 
 [tool.ruff.format]
 quote-style = "double"
+
 [tool.basedpyright]
 include = [
     "pyproject",  
@@ -76,3 +77,5 @@ typeCheckingMode = "standard"
 pythonVersion = "3.13"
 reportMissingImports = "error"
 reportMissingTypeStubs = false
+# warning は CI を失敗させない
+failOnWarnings = false
