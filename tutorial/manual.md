@@ -4,7 +4,7 @@
 
 ## 1. Create new repository
 
-<img src="./assets/image01.png" style="width: 50%;" alt="github pyproject-template home.There is a "use this template" button in the top right corner.">
+<img src="./assets/image01.png" style="width: 50%;" alt="github pyproject-template home.There is a use this template button in the top right corner.">
 
 pyproject-templateのgithubページから、`Use this template`>`Create new repository`を選択。
 
