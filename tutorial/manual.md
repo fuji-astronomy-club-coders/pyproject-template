@@ -59,47 +59,11 @@ pyproject-templateのgithubページから、`Use this template`>`Create new rep
 
 - [ ] templateを作成する。
 
-### 3-3. Package directory setting
-
-package nameを考え、"pyproject"directoryをpackage nameにrenameしてpackage directoryを作成してください。
-
-package nameは小文字英数,ハイフンのみで作成しましょう。
-
-このdirectoryは例えば、ほかのプロジェクトに丸々コピーして使ったりする、プログラムの本体です。repository nameと同じでもいいですが、相対pathを使うときに区別がつかないのでより簡潔な1~3語程度のpackage nameを使いましょう。
-
-例:`weather-calibrated-global-monitor`(気象補正機能付き自動全球観測装置)
-
-| リポジトリ名                              | パッケージ名                                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------------------------- |
-| *weather-calibrated-global-monitor* | *wc_global_monitor*   <br/>or *weather_cal_gm*<br/>or *atmoglobe* (Atmosphere + Globe) |
-
-> 
-> 
-> [!NOTE]
-> 
-> **相対pathを使う時に区別がつかないとは?**
-> 
-> もしpackage nameがリポジトリnameと同じだった場合、
-> 
-> package directoryのpathは`C://python/projects/TEST/TEST`になります。
-> 
-> - `C://python/projects/TEST/note.txt`
-> 
-> - `C://python/projects/TEST/TEST/note.txt`
-> 
-> というファイルの相対pathがいずれも
-> 
-> `TEST/note.txt`
-> 
-> になる場合があります。これでは区別がつきません。
-
-package directoryが作成できたら、次は`pyproject.toml`の編集です。
-
-### 3-4. Pyproject setting
+### 3-3. Pyproject setting
 
 root directoryに`pyproject.toml`というファイルがあります。これはbasedpyrightやruffといったLSPの設定ファイルであると同時に、プロジェクトの環境要件やステータスを示す取扱説明書のようなものになります。
 
-#### 3-4-1. Project explain
+#### 3-3-1. Project explain
 
 `[project]`セクションの`name`(L6)と`description`(L8)を編集します。
 
@@ -107,7 +71,7 @@ root directoryに`pyproject.toml`というファイルがあります。これ�
 
 2. `description`は、プロジェクトの簡素な説明です。リポジトリのDescriptionと同じでもよいですし、新たに100~120字程度の説明を書いてもよいです。
 
-#### 3-4-2.  Tools package setting
+#### 3-3-2.  Tools package setting
 
 LSPにpackageの場所を教えるために`pyproject.toml`の各LSP項目にpackage nameを渡します。
 
