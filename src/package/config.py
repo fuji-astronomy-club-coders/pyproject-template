@@ -2,7 +2,6 @@
 
 from pathlib import Path
 from pprint import pprint
-from typing import Any
 
 import yaml
 
@@ -24,6 +23,7 @@ def load_config() -> dict:
 def resolve_path(relative_path: str) -> Path:
     """プロジェクトルートを基準にパスを解決する。"""
     return (PROJECT_ROOT / relative_path).resolve()
+
 
 config = load_config()
 
