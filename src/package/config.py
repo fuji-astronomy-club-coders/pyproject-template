@@ -25,6 +25,8 @@ def resolve_path(relative_path: str) -> Path:
     """プロジェクトルートを基準にパスを解決する。"""
     return (PROJECT_ROOT / relative_path).resolve()
 
+config = load_config()
+
 
 if __name__ == "__main__":
     config = load_config()
